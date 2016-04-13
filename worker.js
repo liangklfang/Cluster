@@ -135,7 +135,7 @@ cluster.isMaster
 cluster.isWorker
 //如果进程不是master返回true
 cluster.schedulingPolicy
-//这种调用策略要么是基于时间循环的cluster.SCHED_RR，要么是 cluster.SCHED_NONE让操作系统自己完成。这是一种全局的设置，当你第一次产生一个worker或者调用cluster.setupMaster的时候就会生效。cluster.SCHED_RR在非windows操作系统上时默认的调用策略。在windows上如果libuv能够有效的分发IOCP句柄而不会导致大的性能损失的时候也会切换到SCHED_RR。而且cluster.schedulingPolicy也能通过NODE_CLUSTER_SCHED_POLICY环境变量来设置。有效的值如'rr'或者'none'.
+//这种调用策略要么是基于事件循环的cluster.SCHED_RR，要么是 cluster.SCHED_NONE让操作系统自己完成。这是一种全局的设置，当你第一次产生一个worker或者调用cluster.setupMaster的时候就会生效。cluster.SCHED_RR在非windows操作系统上时默认的调用策略。在windows上如果libuv能够有效的分发IOCP句柄而不会导致大的性能损失的时候也会切换到SCHED_RR。而且cluster.schedulingPolicy也能通过NODE_CLUSTER_SCHED_POLICY环境变量来设置。有效的值如'rr'或者'none'.
 cluster.settings
 //其中的options中有silent表示是否把输出传递给父进程的stdio，默认为false;当调用了.setupMaster() (or .fork()) 这个setting对象就会包含settings，而其值为一系列的默认值。当设置以后options就不能变化了，因为setupMaster只能调用一次。注意：最好不要改变或者手动设置其值
 cluster.setupMaster([settings])
