@@ -61,11 +61,16 @@ worker.process
 //是一个ChildProcess,所有的worker都是通过 child_process.fork()创建的，返回的对象保存在process属性里面。在worker中全局的process被保存了。注意：worker当disconnect事件在process上发生的时候就会调用process.exit(0)
 worker.send(message[, sendHandle][, callback])
 //发送消息到worker或者master,handle可选。在主线程中会发送消息到特定的worker,和 ChildProcess.send()一样。在worker中会发送消息到master，和process.send一样
-	  if (cluster.isMaster) {
+  var cluster = require('cluster');
+  if (cluster.isMaster) {
 	  var worker = cluster.fork();
-	  worker.send('hi there');
+	  worker.send('hi,覃亮');
+	  worker.on('message',function(msg){
+	  	 console.log(msg);
+	  })
 	} else if (cluster.isWorker) {
 	  process.on('message', (msg) => {
+       console.log(msg);
 	    process.send(msg);
 	  });
 	}
