@@ -64,25 +64,38 @@
 	cluster.on('disconnect', (worker) => {
 	  console.log(`The worker #${worker.id} has disconnected`);
 	});*/
+
+/*fork事件用于记录每一个worker的创建记录，如果在一定的时间后还没有触发某一个事件就会退出程序
 var cluster = require('cluster');
    if (cluster.isMaster) {
    	//如果一个新的worker被创建，这时候在cluste模块上就会触发fork事件
 	  var worker = cluster.fork();
+	   worker.send('hi,覃亮');
+	 	 worker.on('message',function(msg){
+	  	 console.log(msg);
+	  	 worker.kill();
+	  	 //消息传输结束后，我们杀死进程,这时候会触发cluster的exit事件
+	  })
 	} else if (cluster.isWorker) 
-	 {}
+	 {
+	 	process.on('message', function(msg){
+        console.log(msg);
+	    process.send(msg);
+	  });
+	 }
 	var timeouts = [];
 	function errorMsg() {
 	  console.error('Something must be wrong with the connection ...');
 	}
 	cluster.on('fork', (worker) => {
 	 //timeouts里面存放的是setTimeout的返回值id，通过这个id可以找到我们的定时器对象
-	  timeouts[worker.id] = setTimeout(errorMsg, 2000);
+	  timeouts[worker.id] = setTimeout(errorMsg, 20000);
 	});
 	cluster.on('listening', (worker, address) => {
 	  clearTimeout(timeouts[worker.id]);
 	});
 	cluster.on('exit', (worker, code, signal) => {
+		//进程退出了，我们清除这个定时器
 	  clearTimeout(timeouts[worker.id]);
-	  errorMsg();
 	});
- 
+	*/
