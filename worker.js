@@ -7,7 +7,7 @@ Worker {
   suicide: undefined,//worker.suicide用于判断进程是自己退出还是意外退出的，然后master据此判断是否需要重新产生一个worker,调用kill/disconnect就是undefined
   state: 'none',
   id: 1,//进程唯一一个ID
-  process:
+  process://我们知道ChildProcess和Process都是一样EventEmitter实例
    ChildProcess {
      domain: null,
      _events:
